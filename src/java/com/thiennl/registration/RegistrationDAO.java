@@ -85,7 +85,7 @@ public class RegistrationDAO implements Serializable {
                         + " Where lastname like ? ";
                 //3. create statement obj
                 stm = con.prepareStatement(sql);
-                stm.setString(1,"%"+ searchValue +"%");
+                stm.setString(1, "%" + searchValue + "%");
                 //4. execute querry
                 rs = stm.executeQuery();
                 //5. process}
@@ -120,36 +120,31 @@ public class RegistrationDAO implements Serializable {
             }
         }
     }
-    
-    
-    public boolean deleteAccount(String username)
-    throws SQLException, NamingException, ClassNotFoundException{
+
+    public boolean deleteAccount(String username) throws SQLException, NamingException {
         Connection con = null;
         PreparedStatement stm = null;
-        ResultSet rs = null;
         boolean result = false;
         try {
-            //Create connection
+            //create connection
             con = DBHelper.createConnection();
             if (con != null) {
                 //create sql string
-                String sql = "Delete From Registration "
-                        + "Where username = ?";
+                String sql = "DELETE FROM Registration "
+                        + "WHERE username = ?";
                 //create statement obj
                 stm = con.prepareStatement(sql);
                 stm.setString(1, username);
-                //execute querry
+                //execute query
                 int effectRows = stm.executeUpdate();
-                //process}
-                if(effectRows > 0){
+                //process
+                if (effectRows > 0) {
                     result = true;
                 }
-                // end username and pass are existed
             }//end connection is available
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(RegistrationDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-            if (rs != null) {
-                rs.close();
-            }
             if (stm != null) {
                 stm.close();
             }
@@ -159,37 +154,33 @@ public class RegistrationDAO implements Serializable {
         }
         return result;
     }
-    
-    public boolean updateAccount(String password , String lastname , boolean isAdmin )
-    throws SQLException, NamingException, ClassNotFoundException{
+
+    public boolean updateAccount(String username, String password,String fullname , boolean isAdmin) throws SQLException, NamingException {
         Connection con = null;
         PreparedStatement stm = null;
-        ResultSet rs = null;
         boolean result = false;
         try {
-            //Create connection
+            //create connection
             con = DBHelper.createConnection();
             if (con != null) {
                 //create sql string
-                String sql = "Update Registration "
-                        + "password = ? , lastname = ?, isAdmin = ?";
+                String sql = "UPDATE Registration SET password = ?, isAdmin = ?, lastname = ? WHERE username = ?";
                 //create statement obj
                 stm = con.prepareStatement(sql);
                 stm.setString(1, password);
-                stm.setString(2, lastname);
-                stm.setBoolean(3, isAdmin);
-                //execute querry
+                stm.setBoolean(2, isAdmin);
+                stm.setString(3, fullname);
+                stm.setString(4, username);
+                //execute query
                 int effectRows = stm.executeUpdate();
-                //process}
-                if(effectRows > 0){
+                //process
+                if (effectRows > 0) {
                     result = true;
                 }
-                // end username and pass are existed
             }//end connection is available
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(RegistrationDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-            if (rs != null) {
-                rs.close();
-            }
             if (stm != null) {
                 stm.close();
             }
@@ -199,5 +190,5 @@ public class RegistrationDAO implements Serializable {
         }
         return result;
     }
-    
+
 }

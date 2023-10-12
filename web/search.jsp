@@ -14,6 +14,21 @@
         <title>Search</title>
     </head>
     <body>
+        <%
+        Cookie[] cookie = request.getCookies();
+        if(cookie != null ){
+            Cookie newestCookie = cookie[cookie.length-1];
+            String username = newestCookie.getName();
+            
+        %>
+        <font color =" red">
+            Welcome, <%= username %>
+        </font>
+        <%    
+        }
+        
+        %>
+        
         <h1>Search Page</h1>
         <form action="DispatchServlet">
             Search value <input type="text" name="txtSearchValue" value="<%= request.getParameter("txtSearchValue")%>" />
@@ -45,7 +60,7 @@
                         String urlRewriting = "DispatchServlet"
                                 + "?btAction=delete"
                                 + "&pk=" + dto.getUsername()
-                                + "&lastSearchValue= " + searchValue;
+                                + "&lastSearchValue=" + searchValue;
                 %>
             <form action="DispatchServlet" method="POST">
                 <tr>
@@ -55,6 +70,8 @@
                     </td>
                     <td>
                         <%= dto.getUsername()%>
+                        <input type="hidden" name="txtUsername" 
+                               value="<%= dto.getUsername() %>" />
                     </td>
                     <td>
                         <%= dto.getPassword()%>
@@ -78,11 +95,12 @@
                                />
                     </td>
                     <td>
-                        <input type="hidden" name="lastSearchValue"
-                               value="<%= searchValue%>">
                         <a href="<%=urlRewriting%>">Delete</a>
                     </td>
+                        
                     <td>
+                        <input type="hidden" name="lastSearchValue"
+                               value="<%= searchValue%>">
                         <input type="submit" value="Update" name="btAction" />
                     </td>
                 </tr>

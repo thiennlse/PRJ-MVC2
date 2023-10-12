@@ -27,6 +27,7 @@ public class DispatchServlet extends HttpServlet {
     private final String SEARCH_LASTNAME_CONTROLLER = "SearchLastnameServlet";
     private final String DELETE_ACCOUNT_CONTROLLER = "DeleteAccountServlet";
     private final String UPDATE_ACCOUNT_CONTROLLER = "UpdateAccountServlet";
+    private final String STARTUP_CONTROLLER = "StartupServlet";
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      * @param request servlet request
@@ -43,7 +44,7 @@ public class DispatchServlet extends HttpServlet {
         
         try {
             if(button == null) {// welcome-file is triggered
-                
+                url = STARTUP_CONTROLLER;
             } else if(button.equals("Login")){
                 url = LOGIN_CONTROLLER;
             } else if(button.equals("Search")) {

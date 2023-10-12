@@ -37,17 +37,16 @@ public class UpdateAccountServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, ClassNotFoundException {
         response.setContentType("text/html;charset=UTF-8");
-        String username = request.getParameter("pk");
+        String username = request.getParameter("txtUsername");
         String searchValue = request.getParameter("lastSearchValue");
         String url = ERROR_PAGE;
         try {
             String password = request.getParameter("txtPassword");
-            String lastname = request.getParameter("txtFullname");
-            boolean isAdmin = request.isUserInRole("isAdmin");
-            
+            String isAdmin = request.getParameter("isAdmin");
+            String fullname = request.getParameter("txtFullname");
             RegistrationDAO dao = new RegistrationDAO();
             
-            boolean result = dao.updateAccount(password, lastname, isAdmin);
+            boolean result = dao.updateAccount(username, password, fullname, isAdmin == null ? true : false);
 
             if (result) {
                 //return chuc nang truoc do

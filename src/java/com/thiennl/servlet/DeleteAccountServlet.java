@@ -51,8 +51,8 @@ public class DeleteAccountServlet extends HttpServlet {
             {
                 //return chuc nang truoc do
                 url = "DispatchServlet"
-                        +"?txtSearchValue="+searchValue
-                        +"&btAction=Search";
+                        + "?txtSearchValue=" + searchValue
+                        + "&btAction=Search";
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
