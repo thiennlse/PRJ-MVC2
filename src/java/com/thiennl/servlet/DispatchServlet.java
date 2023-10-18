@@ -28,6 +28,10 @@ public class DispatchServlet extends HttpServlet {
     private final String DELETE_ACCOUNT_CONTROLLER = "DeleteAccountServlet";
     private final String UPDATE_ACCOUNT_CONTROLLER = "UpdateAccountServlet";
     private final String STARTUP_CONTROLLER = "StartupServlet";
+    private final String PRODUCT_SHOW_CONTROLLER = "ProductServlet";
+    private final String ADD_BOOK_TO_CART = "AddItemToCartServlet";
+    private final String VIEW_CART_PAGE = "viewCart.jsp";
+    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      * @param request servlet request
@@ -53,6 +57,14 @@ public class DispatchServlet extends HttpServlet {
                 url = DELETE_ACCOUNT_CONTROLLER;
             } else if (button.equals("Update")){
                 url = UPDATE_ACCOUNT_CONTROLLER;
+            } else if (button.equals("Show")){
+                url = PRODUCT_SHOW_CONTROLLER;
+            } else if (button.equals("Logout")){
+                url = LOGIN_PAGE; 
+            } else if (button.equals("Add Item")){
+                url = ADD_BOOK_TO_CART ;
+            } else if (button.equals("View Cart")){
+                url =VIEW_CART_PAGE ; 
             }
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);

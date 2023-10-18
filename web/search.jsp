@@ -33,6 +33,7 @@
         <form action="DispatchServlet">
             Search value <input type="text" name="txtSearchValue" value="<%= request.getParameter("txtSearchValue")%>" />
             <input type="submit" value="Search" name="btAction" />
+            <input type="submit" value="Logout" name="btAction" />
         </form>
         <%
             String searchValue = request.getParameter("txtSearchValue");
