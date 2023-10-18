@@ -5,33 +5,23 @@
  */
 package com.thiennl.servlet;
 
+import com.thiennl.cart.CartObject;
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author thich
+ * @author PC
  */
-@WebServlet(name = "DispatchServlet", urlPatterns = {"/DispatchServlet"})
-public class DispatchServlet extends HttpServlet {
-
-    private final String LOGIN_PAGE = "login.html";
-    private final String LOGIN_CONTROLLER = "LoginServlet";
-    private final String SEARCH_LASTNAME_CONTROLLER = "SearchLastnameServlet";
-    private final String DELETE_ACCOUNT_CONTROLLER = "DeleteAccountServlet";
-    private final String UPDATE_ACCOUNT_CONTROLLER = "UpdateAccountServlet";
-    private final String STARTUP_CONTROLLER = "StartupServlet";
-    private final String PRODUCT_SHOW_CONTROLLER = "ProductServlet";
-    private final String ADD_BOOK_TO_CART = "AddItemToCartServlet";
-    private final String VIEW_CART_PAGE = "viewCart.jsp";
-    private final String DETELE_BOOK_FROM_CART = "RemoveItemFromCartServlet";
-
+@WebServlet(name = "RemoveItemFromCartServlet", urlPatterns = {"/RemoveItemFromCartServlet"})
+public class RemoveItemFromCartServlet extends HttpServlet {
+    private final String CART_PAGE = "viewCart.jsp";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -43,36 +33,20 @@ public class DispatchServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String url = CART_PAGE;
         response.setContentType("text/html;charset=UTF-8");
-        String url = LOGIN_PAGE;
-        // 1. which button did user click
-        String button = request.getParameter("btAction");
-
+        PrintWriter out = response.getWriter();
         try {
-            if (button == null) {// welcome-file is triggered
-                url = STARTUP_CONTROLLER;
-            } else if (button.equals("Login")) {
-                url = LOGIN_CONTROLLER;
-            } else if (button.equals("Search")) {
-                url = SEARCH_LASTNAME_CONTROLLER;
-            } else if (button.equals("delete")) {
-                url = DELETE_ACCOUNT_CONTROLLER;
-            } else if (button.equals("Update")) {
-                url = UPDATE_ACCOUNT_CONTROLLER;
-            } else if (button.equals("Show")) {
-                url = PRODUCT_SHOW_CONTROLLER;
-            } else if (button.equals("Logout")) {
-                url = LOGIN_PAGE;
-            } else if (button.equals("Add Item")) {
-                url = ADD_BOOK_TO_CART;
-            } else if (button.equals("View Cart")) {
-                url = VIEW_CART_PAGE;
-            } else if (button.equals("Remove Item")) {
-                url = DETELE_BOOK_FROM_CART;
-            }
+
+            HttpSession session = request.getSession();
+            CartObject cart = (CartObject) session.getAttribute("CART");
+            String itemID = request.getParameter("ddlBook");
+            cart.removeItemfromCart(itemID);
+            session.setAttribute("CART", cart);
+            
+            
         } finally {
-            RequestDispatcher rd = request.getRequestDispatcher(url);
-            rd.forward(request, response);
+            response.sendRedirect(url);
         }
     }
 

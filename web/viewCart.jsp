@@ -15,54 +15,60 @@
     </head>
     <body>
         <%
-        //1.Customer go to cart place
-            if(session != null ){
+            //1.Customer go to cart place
+            if (session != null) {
                 //2. Cust take cart
-                CartObject cart = (CartObject)session.getAttribute("CART");
-                if(cart != null){
+                CartObject cart = (CartObject) session.getAttribute("CART");
+                if (cart != null) {
                     //3. get all items
-                    Map<String, Integer> items =  cart.getItem();
-                    if(items != null){
-                        %>
-        
-                        <table border="1">
-                            <thead>
-                                <tr>
-                                    <th>No.</th>
-                                    <th>Name</th>
-                                    <th>Quantity</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <%
-                                int count = 0;
-                                for (String key : items.keySet()) {
-                                        %>
-                                <tr>
-                                    <td><%= ++count%></td>
-                                    
-                                    <td><%= key %></td>
-                                    
-                                    <td><%= items.get(key) %></td>
-                                </tr>
-                                <%
-                                    }
-                                %>
-                                
-                                
-                            </tbody>
-                        </table>
+                    Map<String, Integer> items = cart.getItem();
+                    if (items != null) {
+        %>
+        <form action="DispatchServlet">
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>No.</th>
+                        <th>Name</th>
+                        <th>Quantity</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <%
+                        int count = 0;
+                        for (String key : items.keySet()) {
+                    %>
+                    <tr>
+                        <td><%= ++count%></td>
 
-        
-        
+                        <td><%= key%>
+                           <input type="hidden" name="ddlBook" 
+                               value="<%= key %>" </td>
+
+                        <td><%= items.get(key)%></td>
+
+                        <td>
+                            <input type="submit" value="Remove Item" name="btAction" />
+                        </td>
+
+                    </tr>
+                    <%
+                        }
+                    %>
+
+
+                </tbody>
+            </table>
+        </form>
+
         <%
-                        
-                        return ;
+                        return;
                     }
                 }
             }//end cart place
-        %>
-        
+%>
+
         <h2>NO Cart !!!</h2>
     </body>
 </html>

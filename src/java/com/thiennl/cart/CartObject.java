@@ -56,7 +56,8 @@ public class CartObject implements Serializable {
             } else {
                 if(this.items.containsKey(itemID)){
                     this.items.remove(itemID);
-                }
+                    result = true;
+                }               
             }
         }
         return result;
