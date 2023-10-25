@@ -6,6 +6,7 @@
 package com.thiennl.servlet;
 
 import com.thiennl.registration.RegistrationDAO;
+import com.thiennl.registration.RegistrationDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -53,9 +54,9 @@ public class StartupServlet extends HttpServlet {
                     
                     RegistrationDAO dao = new RegistrationDAO();
                     
-                    boolean result = dao.checkLogin(username, password);
+                    RegistrationDTO result = dao.checkLogin(username, password);
                     
-                if(!result){
+                if(result != null){
                     url = LOGIN_PAGE;
                 }
             }

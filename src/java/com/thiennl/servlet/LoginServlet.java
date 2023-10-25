@@ -10,6 +10,7 @@ import java.io.PrintWriter;
 
 import java.sql.SQLException;
 import com.thiennl.registration.RegistrationDAO;
+import com.thiennl.registration.RegistrationDTO;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.NamingException;
@@ -18,6 +19,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -49,13 +51,12 @@ public class LoginServlet extends HttpServlet {
                 //2.1 new DAO Obj
                 RegistrationDAO dao = new RegistrationDAO();
                 //2.2 call method of DAO
-                boolean result = dao.checkLogin(username, password);
+                RegistrationDTO result = dao.checkLogin(username, password);
                 //3. process result
-                if (result) {
+                if (result != null) {
                     url = SEARCH_PAGE;
-                    Cookie cookie = new Cookie(username,password);
-                    cookie.setMaxAge(60*5);
-                    response.addCookie(cookie);
+                    HttpSession sesion = request.getSession(true);
+                    sesion.setAttribute("USER_INFO", result);
                 }
             }//end user clicked Login button
         } catch (SQLException ex) {

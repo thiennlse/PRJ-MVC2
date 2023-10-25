@@ -45,6 +45,7 @@ public class RemoveItemFromCartServlet extends HttpServlet {
             session.setAttribute("CART", cart);
             
             
+            
         } finally {
             response.sendRedirect(url);
         }

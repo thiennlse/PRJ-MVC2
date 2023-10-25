@@ -52,8 +52,25 @@
                     <td><%=dto.getUnitPrice() %></td>
                 
                 
-                    <td><input type="submit" value="AddToCart" name="btAction" /> </td>
+                    <td><input type="checkbox" name="chkProduct" value="ON" /></td>
+                         
                 </tr>
+                
+                <tr>
+                    <%
+                    if( count == result.size() ){
+                        %>                  
+                        <th colspan="4">
+                            <a href="DispatchServlet?btAction=AddItemtoCart">
+                                Add More Item to Cart
+                            </a></th>
+                            
+                            <th><input type="submit" value="Remove" name="btAction" /></th>   
+                        <%
+                    }
+                    %>
+                </tr>
+               
             </form>    
     <%
         }
